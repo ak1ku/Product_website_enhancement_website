@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Wishlist</title>
+    <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+</head>
+<body>
+    {% include 'catalog/base.html' %}
+    
+    <div class="container mx-auto my-5">
+        <h1 class="text-2xl font-bold mb-4">Your Wishlist</h1>
+        
+        {% if wishlist.products.count > 0 %}
+            <ul class="list-disc pl-5">
+                {% for product in wishlist.products.all %}
+                    <li class="mb-4">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <h2 class="text-xl">{{ product.pr_name }}</h2>
+                                <p class="text-gray-600">Price: ${{ product.pr_price }}</p>
+                            </div>
+                            <div>
+                                <a href="{% url 'add_to_cart' product.pr_id %}" class="btn btn-primary">Add to Cart</a>
+                                <a href="{% url 'remove_from_wishlist' product.pr_id %}" class="btn btn-danger">Remove</a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Your wishlist is empty. Start adding products!</p>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'catalog/js/scripts.js' %}"></script>
+</body>
+</html>

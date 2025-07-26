@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Product Catalog</title>
+    <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+</head>
+<body>
+    {% include 'catalog/base.html' %}
+
+    <div class="container">
+        <h1>Featured Products</h1>
+        <div class="product-grid">
+            {% for product in products %}
+                <div class="product-card">
+                    <img src="{{ product.pr_images.url }}" alt="{{ product.pr_name }}">
+                    <h2>{{ product.pr_name }}</h2>
+                    <p>Price: ${{ product.pr_price }}</p>
+                    <a href="{% url 'product_detail' product.pr_id %}" class="btn">View Details</a>
+                    <form action="{% url 'add_to_cart' product.pr_id %}" method="post">
+                        {% csrf_token %}
+                        <input type="number" name="quantity" value="1" min="1" class="quantity-input">
+                        <button type="submit" class="btn">Add to Cart</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="{% static 'catalog/js/scripts.js' %}"></script>
+</body>
+</html>

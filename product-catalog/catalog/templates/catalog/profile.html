@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+</head>
+<body>
+    {% include 'catalog/base.html' %}
+    
+    <div class="container mx-auto mt-5">
+        <h1 class="text-2xl font-bold">User Profile</h1>
+        <form method="POST" enctype="multipart/form-data" class="mt-4">
+            {% csrf_token %}
+            <div class="mb-4">
+                <label for="phone" class="block text-sm font-medium">Phone</label>
+                {{ form.phone|as_widget(attrs={'class': 'input input-bordered w-full'}) }}
+            </div>
+            <div class="mb-4">
+                <label for="address" class="block text-sm font-medium">Address</label>
+                {{ form.address|as_widget(attrs={'class': 'textarea textarea-bordered w-full', 'rows': 3}) }}
+            </div>
+            <div class="mb-4">
+                <label for="avatar" class="block text-sm font-medium">Avatar</label>
+                {{ form.avatar|as_widget(attrs={'class': 'file-input file-input-bordered w-full'}) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+        
+        {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                    <div class="alert alert-info">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
